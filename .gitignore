@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.js.map
+oclif.manifest.json
+tsconfig.tsbuildinfo
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+*.tgz
+coverage/

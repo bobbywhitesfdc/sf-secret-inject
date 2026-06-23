@@ -1,0 +1,85 @@
+{
+  "name": "sf-secret-inject",
+  "version": "0.0.1",
+  "description": "SF CLI plugin to securely inject secrets into Salesforce External Credential principals",
+  "license": "MIT",
+  "author": "Bobby White",
+  "type": "module",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bobbywhitesfdc/sf-secret-inject.git"
+  },
+  "bugs": "https://github.com/bobbywhitesfdc/sf-secret-inject/issues",
+  "homepage": "https://github.com/bobbywhitesfdc/sf-secret-inject",
+  "keywords": [
+    "salesforce",
+    "sf-plugin",
+    "sfdx-plugin",
+    "oclif",
+    "named-credentials",
+    "external-credentials",
+    "secrets",
+    "security"
+  ],
+  "files": [
+    "./bin",
+    "./dist",
+    "./oclif.manifest.json",
+    "./LICENSE"
+  ],
+  "bin": {
+    "sf-secret-inject": "bin/run.js"
+  },
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -b",
+    "lint": "eslint",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "npm run lint",
+    "prepack": "oclif manifest && oclif readme",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "git add README.md"
+  },
+  "dependencies": {
+    "@oclif/core": "^4",
+    "@oclif/plugin-help": "^6",
+    "@salesforce/core": "^8.31.0",
+    "@salesforce/sf-plugins-core": "^12.2.24"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1",
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^4",
+    "@types/chai": "^4",
+    "@types/mocha": "^10",
+    "@types/node": "^22.19.21",
+    "@types/sinon": "^21.0.1",
+    "chai": "^4",
+    "eslint": "^9",
+    "eslint-config-oclif": "^6",
+    "eslint-config-prettier": "^10",
+    "mocha": "^11",
+    "oclif": "^4",
+    "shx": "^0.3.3",
+    "sinon": "^22.0.0",
+    "ts-node": "^10",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "oclif": {
+    "bin": "sf",
+    "dirname": "sf-secret-inject",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "secret": {
+        "description": "Inject and manage secrets for Salesforce External Credential principals."
+      }
+    }
+  }
+}

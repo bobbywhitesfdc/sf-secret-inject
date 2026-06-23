@@ -126,7 +126,7 @@ export async function listExternalCredentials(conn: Connection): Promise<Externa
 /**
  * Build the JSON payload for the Named Credentials credential endpoint.
  *
- * Confirmed shape (verified 2026-06-23 against GENSPIKE sandbox):
+ * Confirmed shape (verified 2026-06-23 against myOrg sandbox):
  *   POST/PUT /services/data/vXX/named-credentials/credential/
  *   {
  *     externalCredential: "DeveloperName",

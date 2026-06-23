@@ -21,8 +21,8 @@ function buildScopedAccount(orgAlias: string, credential: string, field: string)
 
 describe('SecretStore — scoped account key format', () => {
   it('joins orgAlias, credential, and field with dots', () => {
-    expect(buildScopedAccount('myOrg', 'MMMCPDemo', 'clientSecret')).to.equal(
-      'myOrg.MMMCPDemo.clientSecret',
+    expect(buildScopedAccount('myOrg', 'MyApiCred', 'clientSecret')).to.equal(
+      'myOrg.MyApiCred.clientSecret',
     )
   })
 
@@ -71,8 +71,8 @@ function scopedAccountToEnvKey(scopedAccount: string): string {
 
 describe('SecretStore — env var name derivation', () => {
   it('converts a scoped account key to the expected env var name', () => {
-    expect(scopedAccountToEnvKey('myOrg.MMMCPDemo.clientSecret')).to.equal(
-      'MYORG_MMMCPDEMO_CLIENTSECRET',
+    expect(scopedAccountToEnvKey('myOrg.MyApiCred.clientSecret')).to.equal(
+      'MYORG_MYAPICRED_CLIENTSECRET',
     )
   })
 

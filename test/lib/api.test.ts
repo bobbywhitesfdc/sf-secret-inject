@@ -53,12 +53,12 @@ type MockConnection = Parameters<typeof injectCredential>[0]
 // ── Config fixture ────────────────────────────────────────────────────────────
 
 const MOCK_CONFIG: EcInjectConfig = {
-  credential: 'MMMCPDemo',
-  principal: 'MCPAuthentication',
+  credential: 'MyApiCred',
+  principal: 'MyPrincipal',
   protocol: 'oauth-client-credentials',
   secrets: {
-    clientId: {ref: 'MMMCPDemo.ClientID', source: 'system'},
-    clientSecret: {ref: 'MMMCPDemo.ClientSecret', source: 'system'},
+    clientId: {ref: 'MyApiCred.ClientID', source: 'system'},
+    clientSecret: {ref: 'MyApiCred.ClientSecret', source: 'system'},
   },
 }
 
@@ -72,7 +72,7 @@ const MOCK_SECRETS: Record<string, string> = {
 describe('injectCredential', () => {
   it('POSTs to the named-credentials endpoint and returns the response', async () => {
     const {calls, conn} = buildMockConnection({
-      postResponse: {credentialName: 'MMMCPDemo', revision: 1},
+      postResponse: {credentialName: 'MyApiCred', revision: 1},
     })
 
     const result = await injectCredential(conn, MOCK_CONFIG, MOCK_SECRETS)
@@ -89,8 +89,8 @@ describe('injectCredential', () => {
     await injectCredential(conn, MOCK_CONFIG, MOCK_SECRETS)
 
     const body = JSON.parse(calls[0].body ?? '{}') as Record<string, unknown>
-    expect(body.externalCredential).to.equal('MMMCPDemo')
-    expect(body.principalName).to.equal('MCPAuthentication')
+    expect(body.externalCredential).to.equal('MyApiCred')
+    expect(body.principalName).to.equal('MyPrincipal')
     expect(body.principalType).to.equal('NamedPrincipal')
   })
 
@@ -111,7 +111,7 @@ describe('injectCredential', () => {
 
     const {calls, conn} = buildMockConnection({
       postError: conflictError,
-      putResponse: {credentialName: 'MMMCPDemo', revision: 3},
+      putResponse: {credentialName: 'MyApiCred', revision: 3},
     })
 
     const result = await injectCredential(conn, MOCK_CONFIG, MOCK_SECRETS)
@@ -149,11 +149,11 @@ describe('listExternalCredentials', () => {
     const toolingRecords = [
       {
         AuthenticationProtocol: 'OauthClientCredentials',
-        DeveloperName: 'MMMCPDemo',
-        MasterLabel: 'MassMutual MCP Demo',
+        DeveloperName: 'MyApiCred',
+        MasterLabel: 'My API Credential',
         NamedCredentialExternalCredentialPrincipals: {
           records: [
-            {AuthenticationStatus: 'Authenticated', PrincipalName: 'MCPAuthentication'},
+            {AuthenticationStatus: 'Authenticated', PrincipalName: 'MyPrincipal'},
           ],
         },
       },
@@ -163,11 +163,11 @@ describe('listExternalCredentials', () => {
     const result = await listExternalCredentials(conn)
 
     expect(result).to.have.lengthOf(1)
-    expect(result[0].developerName).to.equal('MMMCPDemo')
-    expect(result[0].masterLabel).to.equal('MassMutual MCP Demo')
+    expect(result[0].developerName).to.equal('MyApiCred')
+    expect(result[0].masterLabel).to.equal('My API Credential')
     expect(result[0].authenticationProtocol).to.equal('OauthClientCredentials')
     expect(result[0].principals).to.have.lengthOf(1)
-    expect(result[0].principals[0].principalName).to.equal('MCPAuthentication')
+    expect(result[0].principals[0].principalName).to.equal('MyPrincipal')
     expect(result[0].principals[0].authenticationStatus).to.equal('Authenticated')
   })
 

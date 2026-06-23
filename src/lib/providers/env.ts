@@ -7,7 +7,7 @@ import type {ISecretProvider} from './index.js'
  * underscores and uppercasing the result. `orgAlias` is ignored — env vars
  * are global to the process and are not scoped per-org.
  *
- * Example: ref "MMMCPDemo.ClientSecret" → env var "MMMCPDEMO_CLIENTSECRET"
+ * Example: ref "MyApiCred.ClientSecret" → env var "MYAPICRED_CLIENTSECRET"
  *
  * This backend is intended for CI/CD environments where secrets are injected
  * as environment variables rather than stored in a local keychain.
@@ -32,7 +32,7 @@ export class EnvProvider implements ISecretProvider {
  * Converts a dotted ref string to an env var name.
  * All dots become underscores; the result is uppercased.
  *
- * "MMMCPDemo.ClientSecret" → "MMMCPDEMO_CLIENTSECRET"
+ * "MyApiCred.ClientSecret" → "MYAPICRED_CLIENTSECRET"
  */
 export function refToEnvKey(ref: string): string {
   return ref.replaceAll('.', '_').toUpperCase()

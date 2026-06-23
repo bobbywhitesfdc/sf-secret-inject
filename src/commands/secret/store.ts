@@ -28,13 +28,13 @@ contain, so you can copy the printed account name straight into your
 When --source env is specified, no value is stored. The command instead prints
 the environment variable name you need to export before running inject.`
 public static readonly examples = [
-    '<%= config.bin %> <%= command.id %> --credential MMMCPDemo --field clientSecret --target-org myOrg',
-    '<%= config.bin %> <%= command.id %> --credential MMMCPDemo --field clientId --target-org myOrg --source system',
-    '<%= config.bin %> <%= command.id %> --credential MMMCPDemo --field clientSecret --target-org myOrg --source env',
+    '<%= config.bin %> <%= command.id %> --credential MyApiCred --field clientSecret --target-org myOrg',
+    '<%= config.bin %> <%= command.id %> --credential MyApiCred --field clientId --target-org myOrg --source system',
+    '<%= config.bin %> <%= command.id %> --credential MyApiCred --field clientSecret --target-org myOrg --source env',
   ]
 public static readonly flags = {
     credential: Flags.string({
-      description: 'Developer name of the External Credential (e.g. MMMCPDemo).',
+      description: 'Developer name of the External Credential (e.g. MyApiCred).',
       required: true,
     }),
     field: Flags.string({

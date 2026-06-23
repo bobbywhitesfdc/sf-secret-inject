@@ -7,26 +7,26 @@ import {parseEcInjectYamlString} from '../../src/lib/yaml.js'
 describe('parseEcInjectYamlString — valid input', () => {
   it('parses a complete oauth-client-credentials config', () => {
     const yaml = `
-credential: MMMCPDemo
-principal: MCPAuthentication
+credential: MyApiCred
+principal: MyPrincipal
 protocol: oauth-client-credentials
 secrets:
   clientId:
     source: system
-    ref: MMMCPDemo.ClientID
+    ref: MyApiCred.ClientID
   clientSecret:
     source: system
-    ref: MMMCPDemo.ClientSecret
+    ref: MyApiCred.ClientSecret
 `.trim()
 
     const config = parseEcInjectYamlString(yaml)
 
-    expect(config.credential).to.equal('MMMCPDemo')
-    expect(config.principal).to.equal('MCPAuthentication')
+    expect(config.credential).to.equal('MyApiCred')
+    expect(config.principal).to.equal('MyPrincipal')
     expect(config.protocol).to.equal('oauth-client-credentials')
     expect(Object.keys(config.secrets)).to.deep.equal(['clientId', 'clientSecret'])
-    expect(config.secrets.clientId).to.deep.equal({ref: 'MMMCPDemo.ClientID', source: 'system'})
-    expect(config.secrets.clientSecret).to.deep.equal({ref: 'MMMCPDemo.ClientSecret', source: 'system'})
+    expect(config.secrets.clientId).to.deep.equal({ref: 'MyApiCred.ClientID', source: 'system'})
+    expect(config.secrets.clientSecret).to.deep.equal({ref: 'MyApiCred.ClientSecret', source: 'system'})
   })
 
   it('parses a basic-auth config with env source', () => {

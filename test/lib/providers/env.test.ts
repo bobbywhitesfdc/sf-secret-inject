@@ -6,7 +6,7 @@ import {EnvProvider, refToEnvKey} from '../../../src/lib/providers/env.js'
 
 describe('refToEnvKey', () => {
   it('replaces dots with underscores and uppercases', () => {
-    expect(refToEnvKey('MMMCPDemo.ClientSecret')).to.equal('MMMCPDEMO_CLIENTSECRET')
+    expect(refToEnvKey('MyApiCred.ClientSecret')).to.equal('MYAPICRED_CLIENTSECRET')
   })
 
   it('handles a single-segment ref with no dots', () => {
@@ -25,13 +25,13 @@ describe('EnvProvider', () => {
 
   afterEach(() => {
     // Clean up any env vars set during tests.
-    delete process.env.MMMCPDEMO_CLIENTSECRET
+    delete process.env.MYAPICRED_CLIENTSECRET
     delete process.env.BASICCRED_PASSWORD
   })
 
   it('resolves an env var that is set', async () => {
-    process.env.MMMCPDEMO_CLIENTSECRET = 'supersecret'
-    const value = await provider.get('MMMCPDemo.ClientSecret', 'any-org')
+    process.env.MYAPICRED_CLIENTSECRET = 'supersecret'
+    const value = await provider.get('MyApiCred.ClientSecret', 'any-org')
     expect(value).to.equal('supersecret')
   })
 
@@ -44,23 +44,23 @@ describe('EnvProvider', () => {
 
   it('throws with the env var name when the variable is not set', async () => {
     try {
-      await provider.get('MMMCPDemo.ClientSecret', 'any-org')
+      await provider.get('MyApiCred.ClientSecret', 'any-org')
       expect.fail('Expected an error to be thrown')
     } catch (error) {
       const {message} = (error as Error)
-      expect(message).to.include('MMMCPDEMO_CLIENTSECRET')
+      expect(message).to.include('MYAPICRED_CLIENTSECRET')
       expect(message).to.include('not set')
     }
   })
 
   it('throws when the variable is set to empty string', async () => {
-    process.env.MMMCPDEMO_CLIENTSECRET = ''
+    process.env.MYAPICRED_CLIENTSECRET = ''
     try {
-      await provider.get('MMMCPDemo.ClientSecret', 'any-org')
+      await provider.get('MyApiCred.ClientSecret', 'any-org')
       expect.fail('Expected an error to be thrown')
     } catch (error) {
       const {message} = (error as Error)
-      expect(message).to.include('MMMCPDEMO_CLIENTSECRET')
+      expect(message).to.include('MYAPICRED_CLIENTSECRET')
     }
   })
 })

@@ -9,7 +9,7 @@
 export interface ISecretProvider {
   /**
    * Resolve a secret value. Throws if the secret cannot be found.
-   * @param ref    Provider-specific reference (e.g. "MMMCPDemo.ClientSecret")
+   * @param ref    Provider-specific reference (e.g. "MyApiCred.ClientSecret")
    * @param orgAlias  Salesforce org alias (used as scope prefix where applicable)
    */
   get(ref: string, orgAlias: string): Promise<string>

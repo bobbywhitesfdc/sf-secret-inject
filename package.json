@@ -1,6 +1,6 @@
 {
   "name": "sf-secret-inject",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "SF CLI plugin to securely inject secrets into Salesforce External Credential principals",
   "license": "MIT",
   "author": "Bobby White",
@@ -26,6 +26,7 @@
     "./bin",
     "./dist",
     "./oclif.manifest.json",
+    "./skill",
     "./LICENSE"
   ],
   "bin": {

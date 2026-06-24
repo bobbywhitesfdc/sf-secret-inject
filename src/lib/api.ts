@@ -98,14 +98,12 @@ export async function injectCredential(
 /**
  * Fetch all External Credentials visible to the authenticated user.
  *
- * Uses the Tooling API to query ExternalCredential and its related
- * NamedCredentialExternalCredentialPrincipal records in a single request.
+ * Uses the Tooling API to query ExternalCredential records. Principal details
+ * are not available via Tooling API SOQL and are omitted from the result.
  */
 export async function listExternalCredentials(conn: Connection): Promise<ExternalCredential[]> {
-  // The Tooling API soql endpoint supports subqueries via the tooling property.
   const soql =
-    'SELECT DeveloperName, MasterLabel, AuthenticationProtocol, ' +
-    '(SELECT PrincipalName, AuthenticationStatus FROM NamedCredentialExternalCredentialPrincipals) ' +
+    'SELECT DeveloperName, MasterLabel, AuthenticationProtocol ' +
     'FROM ExternalCredential ORDER BY DeveloperName ASC'
 
   const result = await conn.tooling.query<ToolingExternalCredentialRecord>(soql)
@@ -114,10 +112,7 @@ export async function listExternalCredentials(conn: Connection): Promise<Externa
     authenticationProtocol: record.AuthenticationProtocol,
     developerName: record.DeveloperName,
     masterLabel: record.MasterLabel,
-    principals: (record.NamedCredentialExternalCredentialPrincipals?.records ?? []).map((p) => ({
-      authenticationStatus: p.AuthenticationStatus,
-      principalName: p.PrincipalName,
-    })),
+    principals: [],
   }))
 }
 
@@ -192,10 +187,4 @@ interface ToolingExternalCredentialRecord {
   AuthenticationProtocol: string
   DeveloperName: string
   MasterLabel: string
-  NamedCredentialExternalCredentialPrincipals?: {
-    records: Array<{
-      AuthenticationStatus: string
-      PrincipalName: string
-    }>
-  }
 }

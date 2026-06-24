@@ -49,29 +49,11 @@ public static readonly summary =
    * are repeated per-row for readability in terminal output.
    */
   private printTable(credentials: ExternalCredential[]): void {
-    // Build flat rows for display — one row per principal, or one "no
-    // principals" row per credential with no principals defined.
-    const rows: TableRow[] = credentials.flatMap((cred) => {
-      if (cred.principals.length === 0) {
-        return [
-          {
-            authenticationStatus: '—',
-            credential: cred.developerName,
-            label: cred.masterLabel,
-            principal: '(no principals)',
-            protocol: cred.authenticationProtocol,
-          },
-        ]
-      }
-
-      return cred.principals.map((p) => ({
-        authenticationStatus: p.authenticationStatus,
-        credential: cred.developerName,
-        label: cred.masterLabel,
-        principal: p.principalName,
-        protocol: cred.authenticationProtocol,
-      }))
-    })
+    const rows: TableRow[] = credentials.map((cred) => ({
+      credential: cred.developerName,
+      label: cred.masterLabel,
+      protocol: cred.authenticationProtocol,
+    }))
 
     this.table(
       {
@@ -79,8 +61,6 @@ public static readonly summary =
           {key: 'credential', name: 'CREDENTIAL'},
           {key: 'label', name: 'LABEL'},
           {key: 'protocol', name: 'PROTOCOL'},
-          {key: 'principal', name: 'PRINCIPAL'},
-          {key: 'authenticationStatus', name: 'STATUS'},
         ],
         data: rows,
       },
@@ -89,9 +69,7 @@ public static readonly summary =
 }
 
 interface TableRow extends Record<string, unknown> {
-  authenticationStatus: string
   credential: string
   label: string
-  principal: string
   protocol: string
 }

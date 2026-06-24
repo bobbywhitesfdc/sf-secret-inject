@@ -20,7 +20,7 @@ Credential structure, `sf secret inject` pushes the actual secret values.
 
 - **`sf secret store`** — writes a secret into the local system keychain
   (macOS Keychain, Linux `secret-tool`, Windows Credential Manager) under a
-  scoped key `{orgAlias}.{ref}` so PLATDEV/PLATQA/UAT secrets never collide.
+  scoped key `{orgAlias}.{ref}` so secrets across different orgs never collide.
 - **`sf secret inject`** — reads an `.ec-inject.yaml` config file, resolves
   secrets from the system keychain or environment variables, and POSTs them
   to the Named Credentials REST endpoint. Automatically retries with PUT on

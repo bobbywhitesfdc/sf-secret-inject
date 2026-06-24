@@ -151,11 +151,6 @@ describe('listExternalCredentials', () => {
         AuthenticationProtocol: 'OauthClientCredentials',
         DeveloperName: 'MyApiCred',
         MasterLabel: 'My API Credential',
-        NamedCredentialExternalCredentialPrincipals: {
-          records: [
-            {AuthenticationStatus: 'Authenticated', PrincipalName: 'MyPrincipal'},
-          ],
-        },
       },
     ]
 
@@ -166,35 +161,12 @@ describe('listExternalCredentials', () => {
     expect(result[0].developerName).to.equal('MyApiCred')
     expect(result[0].masterLabel).to.equal('My API Credential')
     expect(result[0].authenticationProtocol).to.equal('OauthClientCredentials')
-    expect(result[0].principals).to.have.lengthOf(1)
-    expect(result[0].principals[0].principalName).to.equal('MyPrincipal')
-    expect(result[0].principals[0].authenticationStatus).to.equal('Authenticated')
-  })
-
-  it('handles credentials with no principals', async () => {
-    const toolingRecords = [
-      {
-        AuthenticationProtocol: 'Custom',
-        DeveloperName: 'EmptyCred',
-        MasterLabel: 'Empty Credential',
-        NamedCredentialExternalCredentialPrincipals: {records: []},
-      },
-    ]
-
-    const {conn} = buildMockConnection({toolingRecords})
-    const result = await listExternalCredentials(conn)
-
     expect(result[0].principals).to.deep.equal([])
   })
 
-  it('handles credentials where the principals subquery is absent', async () => {
+  it('always returns an empty principals array', async () => {
     const toolingRecords = [
-      {
-        AuthenticationProtocol: 'Custom',
-        DeveloperName: 'NoPrincipals',
-        MasterLabel: 'No Principals',
-        // No NamedCredentialExternalCredentialPrincipals key at all.
-      },
+      {AuthenticationProtocol: 'Custom', DeveloperName: 'AnyCred', MasterLabel: 'Any Cred'},
     ]
 
     const {conn} = buildMockConnection({toolingRecords})
